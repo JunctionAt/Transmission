@@ -46,7 +46,7 @@ commands:
       /<command> <message>
   staffchat:
     description: Toggle into the private staff chat.
-    permission: transmission.modchat
+    permission: transmission.staffchat
     aliases: [sc, mc]
     usage: |
       /<command>
