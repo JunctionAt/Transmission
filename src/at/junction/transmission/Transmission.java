@@ -17,17 +17,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Transmission extends JavaPlugin {
-    MailTable mailTable;
-    TransmissionListener listener;
-    Configuration config;
+    MailTable mailTable = new MailTable(this);
+    TransmissionListener listener = new TransmissionListener(this);
+    Configuration config = new Configuration(this);
     HashMap<String, String> lastMsg = new HashMap<>();
+    List<String> staffChatters = new ArrayList<>();
 
     @Override
     public void onEnable() {
+        getServer().getPluginManager().registerEvents(listener, this);
         setupDatabase();
-        mailTable = new MailTable(this);
-        listener = new TransmissionListener(this);
-        config = new Configuration(this);
 
         File cfile = new File(getDataFolder(), "config.yml");
 		if(!cfile.exists()) {
@@ -199,6 +198,16 @@ public class Transmission extends JavaPlugin {
                 }
                 getServer().broadcastMessage(config.OFFICIAL_COLOR + "[SERVER] " + message);
                 return true;
+            }
+        }
+        
+        if(command.getName().equalsIgnoreCase("staffchat")) {
+            if(staffChatters.indexOf(sender.getName()) == -1) {
+                sender.sendMessage(ChatColor.GOLD + "You are now chatting in staff! Use /staffchat to swap back.");
+                staffChatters.add(sender.getName());
+            } else {
+                sender.sendMessage(ChatColor.GOLD + "You are no longer talking in staff chat.");
+                staffChatters.remove(sender.getName());
             }
         }
         return true;

@@ -13,37 +13,43 @@ commands:
     aliases: [w, whisper, tell]
     permission: transmission.msg
     usage: |
-           /<command> <playername> <message>
+      /<command> <playername> <message>
   reply:
     description: Reply to the player who sent you the most recent message.
     aliases: r
     permission: transmission.msg
     usage: |
-           /<command> <message>
+      /<command> <message>
   mail:
     description: Send a mail to a player.
     permission: transmission.mail
     usage: |
-           /<command> <playername> <message>
+      /<command> <playername> <message>
   inbox:
     description: View inbox, read mail and clear messages.
     permission: transmission.mail
     usage: |
-           /<command> - View inbox.
-           /<command> read <#> - View message #.
-           /command clear - Clear read messages.
+      /<command> - View inbox.
+      /<command> read <#> - View message #.
+      /command clear - Clear read messages.
   official:
     description: Speak in an "official" sense (/say with a color).
     aliases: o
     permission: transmission.official
     usage: |
-           /<command> <message>
+      /<command> <message>
   broadcast:
     description: Broadcast a message on behalf of the server.
     aliases: br
     permission: transmission.broadcast
     usage: |
-           /<command> <message>
+      /<command> <message>
+  staffchat:
+    description: Toggle into the private staff chat.
+    permission: transmission.modchat
+    aliases: [sc, mc]
+    usage: |
+      /<command>
 
 permissions:
   transmission.player:
@@ -61,4 +67,7 @@ permissions:
     default: false
   transmission.broadcast:
     description: Allow a player to broadcast a message on behalf of the server.
+    default: false
+  transmission.staffchat:
+    description: Allow a player to toggle into the private staff chat.
     default: false
