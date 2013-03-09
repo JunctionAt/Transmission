@@ -119,6 +119,7 @@ public class Transmission extends JavaPlugin {
                 return false;
             } else {
                 if(getServer().getOfflinePlayer(args[0]).hasPlayedBefore()) {
+                    
                     String message = args[1];
                     for(int i = 2; i < args.length; i++) {
                         message += " " + args[i];
@@ -134,9 +135,8 @@ public class Transmission extends JavaPlugin {
                     mailTable.save(mail);
                     sender.sendMessage(ChatColor.GOLD + "Mail sent!");
 
-                    try {
-                        getServer().getPlayer(args[0]).sendMessage(ChatColor.GOLD + "You have mail! Type /inbox to read.");
-                    } catch(Exception ex) {
+                    if(getServer().getPlayerExact(args[0]) != null) {
+                        getServer().getPlayerExact(args[0]).sendMessage(ChatColor.GOLD + "You have mail! Type /inbox to read.");
                     }
                     return true;
 
@@ -149,30 +149,41 @@ public class Transmission extends JavaPlugin {
 
         if(command.getName().equalsIgnoreCase("inbox")) {
             List<Mail> mailList = mailTable.getUserMails(sender.getName());
+            if(mailList.isEmpty()) {
+                sender.sendMessage(ChatColor.RED + "You have no mails!");
+                return true;
+            }
+
             if(args.length > 0) { // Specific command.
                 if(args[0].equals("read")) {
                     if(args.length == 2) {
                         try {
-                            int mailID = Integer.parseInt(args[1]) - 1;
-                            Mail mail = mailList.get(mailID);
+                            Mail mail = mailList.get(Integer.parseInt(args[1]) - 1);
 
-                            sender.sendMessage(ChatColor.GOLD + "Mail #" + mailID);
+                            sender.sendMessage(ChatColor.GOLD + "Mail #" + args[1]);
                             sender.sendMessage(ChatColor.GOLD + "From: " + mail.getPlayerFrom());
                             sender.sendMessage(ChatColor.GOLD + mail.getMail());
-                            mail.setStatus(MailStatus.READ); // Set mail to read.
+                            mail.setStatus(MailStatus.READ);
                             mailTable.save(mail);
                         } catch(Exception ex) {
                             sender.sendMessage(ChatColor.RED + "Invalid mail ID!");
-                            return false;
+                            return true;
                         }
                     } else {
                         return false;
                     }
                 }
+
+                if(args[0].equals("clear")) {
+                    mailTable.clearReadMails(sender.getName());
+                    sender.sendMessage(ChatColor.GOLD + "Cleared your inbox of unread messages.");
+                }
             } else { // Show inbox.
+                int i = 1;
                 for(Mail mail : mailList) {
                     String time = timeStamp(mail.getMailTime());
-                    sender.sendMessage(ChatColor.GOLD + "#" + mail.getId() + " from " + mail.getPlayerFrom() + " on " + time);
+                    sender.sendMessage(ChatColor.GOLD + "#" + i + " from " + mail.getPlayerFrom() + " on " + time);
+                    i++;
                 }
                 return true;
             }

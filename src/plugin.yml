@@ -29,8 +29,9 @@ commands:
     description: View inbox, read mail and clear messages.
     permission: transmission.mail
     usage: |
-           /<command>
-           /<command> read <#>
+           /<command> - View inbox.
+           /<command> read <#> - View message #.
+           /command clear - Clear read messages.
   official:
     description: Speak in an "official" sense (/say with a color).
     aliases: o

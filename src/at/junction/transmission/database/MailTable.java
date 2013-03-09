@@ -17,13 +17,31 @@ public class MailTable {
     public List<Mail> getUserMails(String username) {
         List<Mail> retVal = new ArrayList<>();
 
-        Query<Mail> query = plugin.getDatabase().find(Mail.class).where().ieq("playerTo", username).eq("status", MailStatus.UNREAD).query();
+        Query<Mail> query = plugin.getDatabase().find(Mail.class).where().ieq("playerTo", username).order("id DESC");
 
         if (query != null) {
             retVal.addAll(query.findList());
         }
 
         return retVal;
+    }
+    
+    public List<Mail> getUnreadMails(String username) {
+        List<Mail> retVal = new ArrayList<>();
+        
+        Query<Mail> query = plugin.getDatabase().find(Mail.class).where().ieq("playerTo", username).eq("status", MailStatus.UNREAD).order("id DESC");
+        
+        if(query != null) {
+            retVal.addAll(query.findList());
+        }
+        
+        return retVal;
+    }
+    
+    public void clearReadMails(String username) {
+        for(Mail mail : plugin.getDatabase().find(Mail.class).where().ieq("playerTo", username).eq("status", MailStatus.READ).query().findList()) {
+            plugin.getDatabase().delete(mail);
+        }
     }
 
     public int getInboxCount(String username) {
