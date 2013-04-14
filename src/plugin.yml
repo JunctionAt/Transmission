@@ -32,12 +32,6 @@ commands:
       /<command> - View inbox.
       /<command> read <#> - View message #.
       /command clear - Clear read messages.
-  official:
-    description: Speak in an "official" sense (/say with a color).
-    aliases: o
-    permission: transmission.official
-    usage: |
-      /<command> <message>
   broadcast:
     description: Broadcast a message on behalf of the server.
     aliases: br
@@ -54,20 +48,17 @@ commands:
 permissions:
   transmission.player:
     description: Basic player access.
-    default: false
+    default: true
     children:
       transmission.msg:
         description: Allow a player to send a message to another player.
         default: true
       transmission.mail:
         description: Allow a player to send a mail to a player.
-        default: false
-  transmission.official:
-    description: Allow a player to speak in an "official" sense (/say with a color).
-    default: false
+        default: true
   transmission.broadcast:
     description: Allow a player to broadcast a message on behalf of the server.
-    default: false
+    default: op
   transmission.staffchat:
     description: Allow a player to toggle into the private staff chat.
-    default: false
+    default: op

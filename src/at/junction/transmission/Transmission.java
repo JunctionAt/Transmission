@@ -100,19 +100,6 @@ public class Transmission extends JavaPlugin {
             return true;
         }
 
-        if(command.getName().equalsIgnoreCase("official")) {
-            if(args.length < 1) {
-                return false;
-            } else {
-                String message = args[0];
-                for(int i = 1; i < args.length; i++) {
-                    message += " " + args[i];
-                }
-                getServer().broadcastMessage("<" + config.OFFICIAL_COLOR + sender.getName() + ChatColor.RESET + "> " + config.OFFICIAL_COLOR + message);
-                return true;
-            }
-        }
-
         if(command.getName().equalsIgnoreCase("mail")) {
             if(args.length < 2) {
                 return false;
