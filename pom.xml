@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>at.junction.tier2</groupId>
     <artifactId>Transmission</artifactId>
-    <version>1.4.7-1</version>
+    <version>1.6.4-0</version>
     <name>Transmission</name>
     <repositories>
         <repository>

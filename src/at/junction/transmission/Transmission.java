@@ -60,52 +60,11 @@ public class Transmission extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String name, String[] args) {
-        if(command.getName().equalsIgnoreCase("msg")) {
-            if(args.length < 2) {
-                return false;
-            } else {
-                if(getServer().getPlayer(args[0]) != null) {
-                    String message = args[1];
-                    for(int i = 2; i < args.length; i++) {
-                        message += " " + args[i];
-                    }
-                    sendMessage(getServer().getPlayer(args[0]).getName(), sender.getName(), message); // Using args[0] as the first argument for sendMessage may result in confusion.
-                    return true;
-                } else {
-                    sender.sendMessage(ChatColor.RED + "That player is not online!");
-                    return true;
-                }
-            }
-        }
-
-        if(command.getName().equalsIgnoreCase("reply")) {
-            if(args.length < 1) {
-                return false;
-            } else {
-                if(lastMsg.get(sender.getName()) == null) {
-                    sender.sendMessage(ChatColor.RED + "Nobody has messaged you recently!");
-                } else {
-                    if(getServer().getPlayer(lastMsg.get(sender.getName())) != null || lastMsg.get(sender.getName()).equals("CONSOLE")) {
-                        String message = args[0];
-                        for(int i = 1; i < args.length; i++) {
-                            message += " " + args[i];
-                        }
-                        sendMessage(lastMsg.get(sender.getName()), sender.getName(), message);
-                        return true;
-                    } else {
-                        sender.sendMessage(ChatColor.RED + "That player is not online!");
-                    }
-                }
-            }
-            return true;
-        }
-
         if(command.getName().equalsIgnoreCase("mail")) {
             if(args.length < 2) {
                 return false;
             } else {
                 if(getServer().getOfflinePlayer(args[0]).hasPlayedBefore()) {
-                    
                     String message = args[1];
                     for(int i = 2; i < args.length; i++) {
                         message += " " + args[i];
@@ -175,19 +134,6 @@ public class Transmission extends JavaPlugin {
             }
         }
 
-        if(command.getName().equalsIgnoreCase("broadcast")) {
-            if(args.length == 0) {
-                return false;
-            } else {
-                String message = args[0];
-                for(int i = 1; i < args.length; i++) {
-                    message += " " + args[i];
-                }
-                getServer().broadcastMessage(config.OFFICIAL_COLOR + "[SERVER] " + message);
-                return true;
-            }
-        }
-        
         if(command.getName().equalsIgnoreCase("staffchat")) {
             if(staffChatters.indexOf(sender.getName()) == -1) {
                 sender.sendMessage(ChatColor.GOLD + "You are now chatting in staff! Use /staffchat to swap back.");
