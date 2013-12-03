@@ -15,7 +15,7 @@ public class TransmissionListener implements Listener {
     
     @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
-        if(plugin.staffChatters.contains(event.getPlayer().getName())) {
+        if(plugin.staffChatters.contains(ChatColor.stripColor(event.getPlayer().getName()))) {
             event.getRecipients().clear();
             for(Player p : plugin.getServer().getOnlinePlayers()) {
                 if(p.hasPermission("transmission.staffchat")) {
