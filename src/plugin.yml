@@ -32,7 +32,10 @@ commands:
     permission: transmission.broadcast
     aliases: [o]
     usage: /<command> [message]
-
+  list: 
+    description: List players on the server. Shows moderators seperately.
+    permission: transmission.list
+    usage: /<command> [message]
 permissions:
   transmission.player:
     description: Basic player access.
