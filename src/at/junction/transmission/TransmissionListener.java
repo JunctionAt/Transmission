@@ -22,7 +22,16 @@ public class TransmissionListener implements Listener {
                     event.getRecipients().add(p);
                 }
             }
-            event.setFormat(ChatColor.DARK_AQUA + "[STAFF]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s");
+            event.setFormat(ChatColor.DARK_AQUA + "[S]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s");
+            
+        } else if ((plugin.getServer().getPluginManager().getPlugin("Tier2") != null) && 
+                (event.getPlayer() instanceof Player) &&
+                (event.getPlayer().hasMetadata("assistance"))){
+        
+            if (!event.getPlayer().getDisplayName().equals(event.getPlayer().getName())){
+                event.setCancelled(true);
+                plugin.getServer().broadcastMessage("<" + event.getPlayer().getName() + "> " + event.getMessage());
+            }
         }
     }
 }
