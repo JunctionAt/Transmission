@@ -1,40 +1,56 @@
 name: Transmission
 version: ${project.version}
-description: Nice and simple teleport/warp/home plugin.
-author: SyntaxNode
-website: http://syntaxno.de/
+description: Messaging plugin.
+authors: [SyntaxNode, zifnab06]
+website: http://github.com/junctionat/Transmission
 
 main: at.junction.transmission.Transmission
 database: true
 
 commands:
-  mail:
-    description: Send a mail to a player.
-    permission: transmission.mail
-    usage: |
-      /<command> <playername> <message>
-  inbox:
-    description: View inbox, read mail and clear messages.
-    permission: transmission.mail
-    usage: |
-      /<command> - View inbox.
-      /<command> read <#> - View message #.
-      /command clear - Clear read messages.
   staffchat:
     description: Toggle into the private staff chat.
     permission: transmission.staffchat
     aliases: [sc, mc]
-    usage: |
-      /<command>
+    usage: /<command>
+  msg:
+    description: Messages a player
+    permission: transmission.message
+    aliases: [m, w, t, tell]
+    usage: /<command> <player> [message]
+  reply:
+    description: Replies to the last message sent
+    permission: transmission.message
+    aliases: [r]
+    usage: /<command> [message]
+  ircsay:
+    description: IRC Relay command
+    permission: transmission.ircsay
+    usage: /ircsay [message]
+  broadcast:
+    description: Staff broadcast
+    permission: transmission.broadcast
+    aliases: [o]
+    usage: /<command> [message]
 
 permissions:
   transmission.player:
     description: Basic player access.
     default: true
     children:
-      transmission.mail:
-        description: Allow a player to send a mail to a player.
+      transmission.message:
+        description: Allow a player to message other players.
         default: true
-  transmission.staffchat:
-    description: Allow a player to toggle into the private staff chat.
+  transmission.staff:
+    description: Staff commands
+    default: op
+    children: 
+      transmission.broadcast:
+        description: Allows a player to send broadcasts
+        default: op
+      transmission.staffchat:
+        description: Allow a player to toggle into the private staff chat.
+        default: op
+  transmission.ircsay:
+    description: IRC Relay command
     default: op
