@@ -53,6 +53,7 @@ public class TransmissionListener implements Listener {
                         if (p.hasPermission("transmission.staffchat")) {
                             p.sendMessage(ChatColor.GRAY + "<" + event.getPlayer().getName() + "> " + event.getMessage() + " (muted by transmission)");
                         }
+                        plugin.getLogger().info("<" + event.getPlayer().getName() + "> " + event.getMessage() + " (muted by transmission)");
                     }
                 }
 
