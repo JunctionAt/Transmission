@@ -44,6 +44,9 @@ permissions:
       transmission.message:
         description: Allow a player to message other players.
         default: true
+      transmission.list:
+        description: Allow a player to see who is on the server
+        default: true
   transmission.staff:
     description: Staff commands
     default: op
