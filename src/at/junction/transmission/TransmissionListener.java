@@ -6,11 +6,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 public class TransmissionListener implements Listener {
     private Transmission plugin;
-
+    Map<Integer, String> rateLimit;
     public TransmissionListener (Transmission instance) {
         plugin = instance;
+        rateLimit = new HashMap<Integer, String>();
     }
     
     @EventHandler
@@ -33,5 +39,26 @@ public class TransmissionListener implements Listener {
                 plugin.getServer().broadcastMessage("<" + event.getPlayer().getName() + "> " + event.getMessage());
             }
         }
+
+        if (plugin.config.RATE_LIMIT){
+            Integer key = new Random().nextInt();
+            rateLimit.put(key, event.getPlayer().getName());
+            plugin.getServer().getScheduler().runTaskLater(plugin, new rateLimitRemoverTask(this, key), plugin.config.TIME * 20);
+            if (rateLimit.values().contains(event.getPlayer().getName())){
+                int rate = Collections.frequency(rateLimit.values(), event.getPlayer().getName());
+                if (rate > plugin.config.MESSAGES){
+                    event.setCancelled(true);
+                    event.getPlayer().kickPlayer("Spam is bad. Don't spam.");
+                    for (Player p : plugin.getServer().getOnlinePlayers()){
+                        if (p.hasPermission("transmission.staffchat")) {
+                            p.sendMessage(ChatColor.GREEN + "[TRANSMISSION]" + event.getPlayer().getName() + " was kicked for spam.");
+                        }
+                    }
+                }
+
+            }
+        }
     }
+
+
 }
