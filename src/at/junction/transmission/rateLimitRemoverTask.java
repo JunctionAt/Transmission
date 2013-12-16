@@ -16,5 +16,6 @@ public class rateLimitRemoverTask extends BukkitRunnable {
         if (listener.rateLimit.containsKey(key)){
             listener.rateLimit.remove(key);
         }
+
     }
 }

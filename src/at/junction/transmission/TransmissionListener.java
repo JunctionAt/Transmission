@@ -48,10 +48,10 @@ public class TransmissionListener implements Listener {
                 int rate = Collections.frequency(rateLimit.values(), event.getPlayer().getName());
                 if (rate > plugin.config.MESSAGES){
                     event.setCancelled(true);
-                    event.getPlayer().kickPlayer("Spam is bad. Don't spam.");
+                    event.getPlayer().sendMessage("Spam is bad. Don't spam.");
                     for (Player p : plugin.getServer().getOnlinePlayers()){
                         if (p.hasPermission("transmission.staffchat")) {
-                            p.sendMessage(ChatColor.GREEN + "[TRANSMISSION]" + event.getPlayer().getName() + " was kicked for spam.");
+                            p.sendMessage(ChatColor.GRAY + "<" + event.getPlayer().getName() + "> " + event.getMessage() + " (muted by transmission)");
                         }
                     }
                 }
