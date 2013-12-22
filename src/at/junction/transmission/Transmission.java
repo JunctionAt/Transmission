@@ -15,7 +15,7 @@ class Transmission extends JavaPlugin {
     private final TransmissionListener listener = new TransmissionListener(this);
     final Configuration config = new Configuration(this);
     final List<String> staffChatters = new ArrayList<>();
-    private final HashMap<String, String> replyList = new HashMap<String, String>();
+    private final HashMap<String, String> replyList = new HashMap<>();
 
     @Override
     public void onEnable() {

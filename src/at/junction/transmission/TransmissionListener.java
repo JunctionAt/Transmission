@@ -16,7 +16,7 @@ class TransmissionListener implements Listener {
     final Map<Integer, String> rateLimit;
     public TransmissionListener (Transmission instance) {
         plugin = instance;
-        rateLimit = new HashMap<Integer, String>();
+        rateLimit = new HashMap<>();
     }
     
     @EventHandler
