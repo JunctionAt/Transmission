@@ -10,12 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-class Transmission extends JavaPlugin {
+public class Transmission extends JavaPlugin {
 
-    private final TransmissionListener listener = new TransmissionListener(this);
-    final Configuration config = new Configuration(this);
-    final List<String> staffChatters = new ArrayList<>();
-    private final HashMap<String, String> replyList = new HashMap<String, String>();
+    TransmissionListener listener = new TransmissionListener(this);
+    Configuration config = new Configuration(this);
+    List<String> staffChatters = new ArrayList<>();
+    HashMap<String, String> replyList = new HashMap<String, String>();
 
     @Override
     public void onEnable() {
@@ -114,7 +114,7 @@ class Transmission extends JavaPlugin {
         return true;
     }
 
-    void sendMessage(CommandSender from, CommandSender to, String message) {
+    public void sendMessage(CommandSender from, CommandSender to, String message) {
         String niceMessage = ChatColor.GRAY + "["
                 + ChatColor.RED + "%s"
                 + ChatColor.GRAY + " -> "
