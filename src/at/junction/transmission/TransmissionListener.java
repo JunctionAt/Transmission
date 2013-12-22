@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class TransmissionListener implements Listener {
-    private Transmission plugin;
-    Map<Integer, String> rateLimit;
+class TransmissionListener implements Listener {
+    private final Transmission plugin;
+    final Map<Integer, String> rateLimit;
     public TransmissionListener (Transmission instance) {
         plugin = instance;
         rateLimit = new HashMap<Integer, String>();

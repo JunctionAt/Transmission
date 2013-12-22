@@ -3,10 +3,10 @@ package at.junction.transmission;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class rateLimitRemoverTask extends BukkitRunnable {
+class rateLimitRemoverTask extends BukkitRunnable {
 
-    TransmissionListener listener;
-    int key;
+    private final TransmissionListener listener;
+    private final int key;
     public rateLimitRemoverTask(TransmissionListener listener, int key){
         this.listener = listener;
         this.key = key;
