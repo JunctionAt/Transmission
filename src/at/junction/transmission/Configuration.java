@@ -1,5 +1,7 @@
 package at.junction.transmission;
 
+import org.bukkit.ChatColor;
+
 class Configuration {
     private final Transmission plugin;
     boolean RATE_LIMIT;
