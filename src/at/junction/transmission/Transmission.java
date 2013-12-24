@@ -36,12 +36,28 @@ public class Transmission extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String name, String[] args) {
         if (command.getName().equalsIgnoreCase("staffchat")) {
-            if (staffChatters.contains(sender.getName())) { //Leave staff chat
-                sender.sendMessage(ChatColor.GOLD + "You are no longer talking in staff chat.");
-                staffChatters.remove(sender.getName());
-            } else { //Enter staff chat
-                sender.sendMessage(ChatColor.GOLD + "You are now chatting in staff! Use /staffchat to swap back.");
-                staffChatters.add(sender.getName());
+            if (args.length == 0){ //Switch into StaffChat Mode
+                if (staffChatters.contains(sender.getName())) { //Leave staff chat
+                    sender.sendMessage(ChatColor.GOLD + "You are no longer talking in staff chat.");
+                    staffChatters.remove(sender.getName());
+                } else { //Enter staff chat
+                    sender.sendMessage(ChatColor.GOLD + "You are now chatting in staff! Use /staffchat to swap back.");
+                    staffChatters.add(sender.getName());
+                }
+            } else { //Send a single message to staff chat
+                StringBuilder message = new StringBuilder();
+                String playerName = (sender instanceof Player)? ((Player) sender).getDisplayName() : sender.getName();
+                for (int i=0; i<args.length; i++){
+                    message.append(args[i]);
+                    if (i != args.length - 1){
+                        message.append(" ");
+                    }
+                }
+                for(Player p : getServer().getOnlinePlayers()) {
+                    if(p.hasPermission("transmission.staffchat")) {
+                        p.sendMessage(String.format(ChatColor.DARK_AQUA + "[S]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s", playerName, message));
+                    }
+                }
             }
         } else if (command.getName().equalsIgnoreCase("broadcast")) {
             if (args.length < 1) {
