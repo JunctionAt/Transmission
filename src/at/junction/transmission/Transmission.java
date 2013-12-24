@@ -115,7 +115,7 @@ public class Transmission extends JavaPlugin {
                 message.append(args[i]).append(" ");
             }
             sendMessage(sender, reciever, message.toString().substring(0, message.length() - 1));
-            replyList.put(sender.getName(), reciever.getName());
+            replyList.put(reciever.getName(), sender.getName());
         } else if (command.getName().equalsIgnoreCase("list")) {
             StringBuilder players = new StringBuilder();
             for (Player p : getServer().getOnlinePlayers()) {
