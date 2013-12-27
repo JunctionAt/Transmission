@@ -44,6 +44,10 @@ commands:
     description: Unmute a player
     permission: transmission.mute
     usage: /<command> <playername>
+  me:
+    description: Override of bukkit's /me command - works exactly the same (except follows mute)
+    permission: transmission.me
+    usage: /<command> [message]
 permissions:
   transmission.player:
     description: Basic player access.
@@ -54,6 +58,9 @@ permissions:
         default: true
       transmission.list:
         description: Allow a player to see who is on the server
+        default: true
+      transmission.me
+        description: Allow a player to use /me
         default: true
   transmission.staff:
     description: Staff commands

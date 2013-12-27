@@ -155,6 +155,16 @@ public class Transmission extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "Player was unmuted");
             }
 
+        } else if (command.getName().equalsIgnoreCase("me")){
+            StringBuilder message = new StringBuilder();
+            for (String word: args){
+                message.append(word).append(" ");
+            }
+            if (!mutedPlayers.contains(sender.getName().toLowerCase())){
+                getServer().broadcastMessage(String.format("* %s %s", message.toString(), sender.getName()));
+            } else {
+                sender.sendMessage("You have been muted");
+            }
         }
         return true;
     }
