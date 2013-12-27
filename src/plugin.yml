@@ -59,7 +59,7 @@ permissions:
       transmission.list:
         description: Allow a player to see who is on the server
         default: true
-      transmission.me
+      transmission.me:
         description: Allow a player to use /me
         default: true
   transmission.staff:
