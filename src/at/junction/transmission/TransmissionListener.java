@@ -43,7 +43,7 @@ public class TransmissionListener implements Listener {
         //If player is in muted list, send to console only
         else if (plugin.mutedPlayers.contains(event.getPlayer().getName().toLowerCase())){
             event.getPlayer().sendMessage("You have been muted");
-            plugin.getLogger().info("Muted Message: " + event.getMessage());
+            plugin.getLogger().info(String.format("Muted Message: <%s> %s", event.getPlayer().getName(),  event.getMessage()));
             event.setCancelled(true);
             return;
         }
