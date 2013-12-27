@@ -170,7 +170,7 @@ public class Transmission extends JavaPlugin {
     }
 
     public void sendMessage(CommandSender from, CommandSender to, String message) {
-        if (mutedPlayers.contains(from.getName())){
+        if (mutedPlayers.contains(from.getName().toLowerCase())){
             if (!to.hasPermission("Transmission.staff")){
                 from.sendMessage("You have been muted and can only PM online staff");
                 return;
