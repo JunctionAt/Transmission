@@ -161,7 +161,7 @@ public class Transmission extends JavaPlugin {
                 message.append(word).append(" ");
             }
             if (!mutedPlayers.contains(sender.getName().toLowerCase())){
-                getServer().broadcastMessage(String.format("* %s %s", message.toString(), sender.getName()));
+                getServer().broadcastMessage(String.format("* %s %s",sender.getName(), message.toString()));
             } else {
                 sender.sendMessage("You have been muted");
             }
