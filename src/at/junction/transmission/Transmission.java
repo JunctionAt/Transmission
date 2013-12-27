@@ -170,6 +170,12 @@ public class Transmission extends JavaPlugin {
     }
 
     public void sendMessage(CommandSender from, CommandSender to, String message) {
+        if (mutedPlayers.contains(from.getName())){
+            if (!to.hasPermission("Transmission.staff")){
+                from.sendMessage("You have been muted");
+                return;
+            }
+        }
         String niceMessage = ChatColor.GRAY + "["
                 + ChatColor.RED + "%s"
                 + ChatColor.GRAY + " -> "
