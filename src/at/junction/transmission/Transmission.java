@@ -15,6 +15,7 @@ public class Transmission extends JavaPlugin {
     TransmissionListener listener = new TransmissionListener(this);
     Configuration config = new Configuration(this);
     List<String> staffChatters = new ArrayList<>();
+    List<String> mutedPlayers = new ArrayList<>();
     HashMap<String, String> replyList = new HashMap<String, String>();
 
     @Override
@@ -125,6 +126,34 @@ public class Transmission extends JavaPlugin {
             sender.sendMessage("There are " + getServer().getOnlinePlayers().length + "/" + getServer().getMaxPlayers() + " players online:");
             sender.sendMessage(players.substring(0, players.length()-2));
             sender.sendMessage(ChatColor.GREEN + "Please type /staff to see online staff members.");
+
+        } else if (command.getName().equalsIgnoreCase("mute")){
+            if (args.length == 0){
+                String message = "Muted players: ";
+                for (String pname : mutedPlayers){
+                    message += pname;
+                    message += " ";
+                }
+                sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
+                sender.sendMessage(message);
+            } else if (args.length == 1){
+                if (mutedPlayers.contains(args[0].toLowerCase())){
+                    sender.sendMessage(ChatColor.RED + "Player is already muted");
+                } else {
+                    mutedPlayers.add(args[0].toLowerCase());
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
+            }
+        } else if (command.getName().equalsIgnoreCase("unmute")){
+            if (args.length != 1){
+                sender.sendMessage(ChatColor.RED + "Usage: /unmute <player>");
+            } else if (!mutedPlayers.contains(args[0].toLowerCase())){
+                sender.sendMessage(ChatColor.RED + "Player is not muted");
+            } else {
+                mutedPlayers.remove(args[0].toLowerCase());
+                sender.sendMessage(ChatColor.RED + "Player was unmuted");
+            }
 
         }
         return true;

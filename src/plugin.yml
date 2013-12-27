@@ -36,6 +36,14 @@ commands:
     description: List players on the server. Shows moderators seperately.
     permission: transmission.list
     usage: /<command> [message]
+  mute:
+    description: Mute a player. If no player name is given, shows the muted list.
+    permission: transmission.mute
+    usage: /<command> [<playername>]
+  unmute:
+    description: Unmute a player
+    permission: transmission.mute
+    usage: /<command> <playername>
 permissions:
   transmission.player:
     description: Basic player access.
@@ -56,6 +64,9 @@ permissions:
         default: op
       transmission.staffchat:
         description: Allow a player to toggle into the private staff chat.
+        default: op
+      transmission.mute:
+        description: ALlows staff to mute players
         default: op
   transmission.ircsay:
     description: IRC Relay command
