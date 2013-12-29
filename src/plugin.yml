@@ -48,6 +48,10 @@ commands:
     description: Override of bukkit's /me command - works exactly the same (except follows mute)
     permission: transmission.me
     usage: /<command> [message]
+  transmission-reload:
+    description: Reload transmission's settings from disk.
+    permission: transmission.reload
+    usage: /<command>
 permissions:
   transmission.player:
     description: Basic player access.
@@ -73,8 +77,11 @@ permissions:
         description: Allow a player to toggle into the private staff chat.
         default: op
       transmission.mute:
-        description: ALlows staff to mute players
+        description: Allows staff to mute players
         default: op
+  transmission.reload:
+    description: Allows reloading of configuration
+    default: op
   transmission.ircsay:
     description: IRC Relay command
     default: op

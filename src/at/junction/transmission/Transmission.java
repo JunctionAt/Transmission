@@ -172,6 +172,10 @@ public class Transmission extends JavaPlugin {
             } else {
                 sender.sendMessage(config.MUTE_MESSAGE);
             }
+        } else if (command.getName().equalsIgnoreCase("transmission-reload")){
+            config.save();
+            config.load();
+            sender.sendMessage(ChatColor.RED + "Configuration reloaded");
         }
         return true;
     }
