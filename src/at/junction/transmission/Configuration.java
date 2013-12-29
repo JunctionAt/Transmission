@@ -18,6 +18,7 @@ public class Configuration {
     }
 
     public void load() {
+        plugin.reloadConfig();
         RATE_LIMIT = plugin.getConfig().getBoolean("rate-limit", false);
         MESSAGES = plugin.getConfig().getInt("rate-limit-messages", 100);
         TIME = plugin.getConfig().getInt("rate-limit-time", 1);
