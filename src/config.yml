@@ -1,3 +1,4 @@
 rate-limit: false
 rate-limit-messages: 5
 rate-limit-time: 15
+muted-players: []

@@ -15,7 +15,6 @@ public class Transmission extends JavaPlugin {
     TransmissionListener listener = new TransmissionListener(this);
     Configuration config = new Configuration(this);
     List<String> staffChatters = new ArrayList<>();
-    List<String> mutedPlayers = new ArrayList<>();
     HashMap<String, String> replyList = new HashMap<String, String>();
 
     @Override
@@ -32,6 +31,7 @@ public class Transmission extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        config.save();
     }
 
     @Override
@@ -130,17 +130,17 @@ public class Transmission extends JavaPlugin {
         } else if (command.getName().equalsIgnoreCase("mute")){
             if (args.length == 0){
                 String message = "Muted players: ";
-                for (String pname : mutedPlayers){
+                for (String pname : config.MUTED_PLAYERS){
                     message += pname;
                     message += " ";
                 }
                 sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
                 sender.sendMessage(message);
             } else if (args.length == 1){
-                if (mutedPlayers.contains(args[0].toLowerCase())){
+                if (config.MUTED_PLAYERS.contains(args[0].toLowerCase())){
                     sender.sendMessage(ChatColor.RED + "Player is already muted");
                 } else {
-                    mutedPlayers.add(args[0].toLowerCase());
+                    config.MUTED_PLAYERS.add(args[0].toLowerCase());
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
@@ -148,10 +148,10 @@ public class Transmission extends JavaPlugin {
         } else if (command.getName().equalsIgnoreCase("unmute")){
             if (args.length != 1){
                 sender.sendMessage(ChatColor.RED + "Usage: /unmute <player>");
-            } else if (!mutedPlayers.contains(args[0].toLowerCase())){
+            } else if (!config.MUTED_PLAYERS.contains(args[0].toLowerCase())){
                 sender.sendMessage(ChatColor.RED + "Player is not muted");
             } else {
-                mutedPlayers.remove(args[0].toLowerCase());
+                config.MUTED_PLAYERS.remove(args[0].toLowerCase());
                 sender.sendMessage(ChatColor.RED + "Player was unmuted");
             }
 
@@ -160,7 +160,7 @@ public class Transmission extends JavaPlugin {
             for (String word: args){
                 message.append(word).append(" ");
             }
-            if (!mutedPlayers.contains(sender.getName().toLowerCase())){
+            if (!config.MUTED_PLAYERS.contains(sender.getName().toLowerCase())){
                 getServer().broadcastMessage(String.format("* %s %s",sender.getName(), message.toString()));
             } else {
                 sender.sendMessage("You have been muted");
@@ -170,7 +170,7 @@ public class Transmission extends JavaPlugin {
     }
 
     public void sendMessage(CommandSender from, CommandSender to, String message) {
-        if (mutedPlayers.contains(from.getName().toLowerCase())){
+        if (config.MUTED_PLAYERS.contains(from.getName().toLowerCase())){
             if (!to.hasPermission("Transmission.staff")){
                 from.sendMessage("You have been muted and can only PM online staff");
                 return;

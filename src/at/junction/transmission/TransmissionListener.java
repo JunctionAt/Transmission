@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class TransmissionListener implements Listener {
         }
 
         //If player is in muted list, send to console only
-        else if (plugin.mutedPlayers.contains(event.getPlayer().getName().toLowerCase())){
+        else if (plugin.config.MUTED_PLAYERS.contains(event.getPlayer().getName().toLowerCase())){
             event.getPlayer().sendMessage("You have been muted");
             plugin.getLogger().info(String.format("Muted Message: <%s> %s", event.getPlayer().getName(),  event.getMessage()));
             event.setCancelled(true);
@@ -66,6 +67,12 @@ public class TransmissionListener implements Listener {
                 }
 
             }
+        }
+    }
+    @EventHandler
+    public void onPlayerQuitEvent(PlayerQuitEvent event){
+        if (plugin.staffChatters.contains(event.getPlayer().getName())){
+            plugin.staffChatters.remove(event.getPlayer().getName());
         }
     }
 
