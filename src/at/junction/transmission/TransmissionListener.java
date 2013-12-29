@@ -43,7 +43,7 @@ public class TransmissionListener implements Listener {
 
         //If player is in muted list, send to console only
         else if (plugin.config.MUTED_PLAYERS.contains(event.getPlayer().getName().toLowerCase())){
-            event.getPlayer().sendMessage("You have been muted");
+            event.getPlayer().sendMessage(plugin.config.MUTE_MESSAGE);
             plugin.getLogger().info(String.format("Muted Message: <%s> %s", event.getPlayer().getName(),  event.getMessage()));
             event.setCancelled(true);
             return;
@@ -57,7 +57,7 @@ public class TransmissionListener implements Listener {
                 int rate = Collections.frequency(rateLimit.values(), event.getPlayer().getName());
                 if (rate > plugin.config.MESSAGES){
                     event.setCancelled(true);
-                    event.getPlayer().sendMessage("Spam is bad. Don't spam.");
+                    event.getPlayer().sendMessage(plugin.config.SPAM_MESSAGE);
                     for (Player p : plugin.getServer().getOnlinePlayers()){
                         if (p.hasPermission("transmission.staffchat")) {
                             p.sendMessage(ChatColor.GRAY + "<" + event.getPlayer().getName() + "> " + event.getMessage() + " (muted by transmission)");

@@ -141,6 +141,10 @@ public class Transmission extends JavaPlugin {
                     sender.sendMessage(ChatColor.RED + "Player is already muted");
                 } else {
                     config.MUTED_PLAYERS.add(args[0].toLowerCase());
+                    sender.sendMessage(ChatColor.RED + "Player has been muted");
+                    if (getServer().getPlayer(args[0]) instanceof Player){
+                        getServer().getPlayer(args[0]).sendMessage(ChatColor.RED + "You have been muted by " + sender.getName());
+                    }
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
@@ -153,6 +157,9 @@ public class Transmission extends JavaPlugin {
             } else {
                 config.MUTED_PLAYERS.remove(args[0].toLowerCase());
                 sender.sendMessage(ChatColor.RED + "Player was unmuted");
+                if (getServer().getPlayer(args[0]) instanceof Player){
+                    getServer().getPlayer(args[0]).sendMessage(ChatColor.RED + "You have been unmuted by " + sender.getName());
+                }
             }
 
         } else if (command.getName().equalsIgnoreCase("me")){
@@ -163,7 +170,7 @@ public class Transmission extends JavaPlugin {
             if (!config.MUTED_PLAYERS.contains(sender.getName().toLowerCase())){
                 getServer().broadcastMessage(String.format("* %s %s",sender.getName(), message.toString()));
             } else {
-                sender.sendMessage("You have been muted");
+                sender.sendMessage(config.MUTE_MESSAGE);
             }
         }
         return true;
@@ -172,7 +179,7 @@ public class Transmission extends JavaPlugin {
     public void sendMessage(CommandSender from, CommandSender to, String message) {
         if (config.MUTED_PLAYERS.contains(from.getName().toLowerCase())){
             if (!to.hasPermission("Transmission.staff")){
-                from.sendMessage("You have been muted and can only PM online staff");
+                from.sendMessage(config.MUTE_MESSAGE);
                 return;
             }
         }

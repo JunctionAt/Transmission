@@ -10,6 +10,8 @@ public class Configuration {
     int MESSAGES;
     int TIME;
     List<String> MUTED_PLAYERS;
+    String MUTE_MESSAGE;
+    String SPAM_MESSAGE;
 
     public Configuration(Transmission instance) {
         plugin = instance;
@@ -20,6 +22,8 @@ public class Configuration {
         MESSAGES = plugin.getConfig().getInt("rate-limit-messages", 100);
         TIME = plugin.getConfig().getInt("rate-limit-time", 1);
         MUTED_PLAYERS = plugin.getConfig().getStringList("muted-players");
+        MUTE_MESSAGE = plugin.getConfig().getString("mute-message");
+        SPAM_MESSAGE = plugin.getConfig().getString("spam-message");
     }
     public void save(){
         plugin.getConfig().set("muted-players", MUTED_PLAYERS);
