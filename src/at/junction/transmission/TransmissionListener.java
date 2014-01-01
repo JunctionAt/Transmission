@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,6 +67,13 @@ public class TransmissionListener implements Listener {
                 }
 
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent event){
+        if (plugin.config.MOTD){
+            event.getPlayer().sendMessage(plugin.config.MOTD_COLOR + plugin.config.MOTD_MESSAGE);
         }
     }
 
