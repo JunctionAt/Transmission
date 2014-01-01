@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,8 +44,8 @@ public class TransmissionListener implements Listener {
         }
 
         //If player is in muted list, send to console only
-        else if (plugin.mutedPlayers.contains(event.getPlayer().getName().toLowerCase())){
-            event.getPlayer().sendMessage("You have been muted");
+        else if (plugin.config.MUTED_PLAYERS.contains(event.getPlayer().getName().toLowerCase())){
+            event.getPlayer().sendMessage(plugin.config.MUTE_MESSAGE);
             plugin.getLogger().info(String.format("Muted Message: <%s> %s", event.getPlayer().getName(),  event.getMessage()));
             event.setCancelled(true);
             return;
@@ -57,7 +59,7 @@ public class TransmissionListener implements Listener {
                 int rate = Collections.frequency(rateLimit.values(), event.getPlayer().getName());
                 if (rate > plugin.config.MESSAGES){
                     event.setCancelled(true);
-                    event.getPlayer().sendMessage("Spam is bad. Don't spam.");
+                    event.getPlayer().sendMessage(plugin.config.SPAM_MESSAGE);
                     for (Player p : plugin.getServer().getOnlinePlayers()){
                         if (p.hasPermission("transmission.staffchat")) {
                             p.sendMessage(ChatColor.GRAY + "<" + event.getPlayer().getName() + "> " + event.getMessage() + " (muted by transmission)");
@@ -67,6 +69,12 @@ public class TransmissionListener implements Listener {
                 }
 
             }
+        }
+    }
+    @EventHandler
+    public void onPlayerQuitEvent(PlayerQuitEvent event){
+        if (plugin.staffChatters.contains(event.getPlayer().getName())){
+            plugin.staffChatters.remove(event.getPlayer().getName());
         }
     }
 

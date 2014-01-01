@@ -1,6 +1,9 @@
 rate-limit: false
 rate-limit-messages: 5
 rate-limit-time: 15
+muted-players: []
+mute-message: You can not talk until a staff member unmutes you. Type /staff to get a list of online staff members.
+spam-message: Spam is bad. Don't spam. (Wait a few seconds until you talk again)
 motd-enabled: false
 motd-color: GREEN
 motd-message: Welcome!
