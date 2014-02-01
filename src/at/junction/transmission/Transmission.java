@@ -98,7 +98,7 @@ public class Transmission extends JavaPlugin {
                     message.append(t).append(" ");
                 }
                 sendMessage(sender, reciever, message.toString().substring(0, message.length() - 1));
-
+                replyList.put(reciever.getName(), sender.getName());
             } else { //They have recieved messages, return. 
                 sender.sendMessage(ChatColor.RED + "You haven't recieved any messages, therefore you can't reply.");
             }
