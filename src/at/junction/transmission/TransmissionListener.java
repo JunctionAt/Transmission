@@ -52,6 +52,8 @@ public class TransmissionListener implements Listener {
         }
 
         if (plugin.config.RATE_LIMIT){
+            if (event.getPlayer().hasPermission("transmission.spambypass"))
+                return;
             Integer key = new Random().nextInt();
             rateLimit.put(key, event.getPlayer().getName());
             plugin.getServer().getScheduler().runTaskLater(plugin, new rateLimitRemoverTask(this, key), plugin.config.TIME * 20);
