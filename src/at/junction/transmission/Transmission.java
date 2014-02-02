@@ -110,6 +110,7 @@ public class Transmission extends JavaPlugin {
             Player reciever;
             if ((reciever = getServer().getPlayer(args[0])) == null) {
                 sender.sendMessage("That player is not online");
+                return true;
             }
             StringBuilder message = new StringBuilder();
             for (int i = 1; i < args.length; i++) {
