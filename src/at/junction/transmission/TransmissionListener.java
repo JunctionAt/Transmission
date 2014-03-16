@@ -19,9 +19,9 @@ public class TransmissionListener implements Listener {
     Map<Integer, String> rateLimit;
     public TransmissionListener (Transmission instance) {
         plugin = instance;
-        rateLimit = new HashMap<>();
+        rateLimit = new HashMap<Integer, String>();
     }
-
+    
     @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
         if(plugin.staffChatters.contains(ChatColor.stripColor(event.getPlayer().getName()))) {
@@ -32,14 +32,11 @@ public class TransmissionListener implements Listener {
                 }
             }
             event.setFormat(ChatColor.DARK_AQUA + "[S]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s");
-
-        } else if ((plugin.getServer().getPluginManager().getPlugin("Tier2") != null) &&
-                (event.getPlayer() != null) &&
+            
+        } else if ((plugin.getServer().getPluginManager().getPlugin("Tier2") != null) && 
+                (event.getPlayer() instanceof Player) &&
                 (event.getPlayer().hasMetadata("assistance"))){
-            if (event.getPlayer().hasMetadata("vanished")){
-                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), String.format("ircsay %s %s", event.getPlayer().getName(), event.getMessage()));
-                event.setCancelled(true);
-            }
+        
             if (!event.getPlayer().getDisplayName().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 plugin.getServer().broadcastMessage("<" + event.getPlayer().getName() + "> " + event.getMessage());
