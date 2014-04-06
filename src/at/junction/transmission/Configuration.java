@@ -1,7 +1,6 @@
 package at.junction.transmission;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +14,9 @@ class CircularQueue<T> {
         }
         T returnObject = objects.get(pointer);
         pointer++;
-        if (pointer>objects.size()){
+        if (pointer >= objects.size()-1)
             pointer=0;
-        }
+
         return returnObject;
     }
 
