@@ -4,11 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
 
 public class Transmission extends JavaPlugin {
 
@@ -27,6 +31,19 @@ public class Transmission extends JavaPlugin {
             saveConfig();
         }
         config.load();
+
+
+        BukkitTask task = getServer().getScheduler().runTaskTimer(
+                this, new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (config.ALERTS.size() > 0){
+                    getServer().broadcastMessage(String.format("%s[ALERT] %s", ChatColor.LIGHT_PURPLE ,config.ALERTS.get()));
+                }
+            }
+        }, config.ALERT_DELAY * 20, config.ALERT_PERIOD * 20);
+
+
     }
 
     @Override
@@ -37,7 +54,7 @@ public class Transmission extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String name, String[] args) {
         if (command.getName().equalsIgnoreCase("staffchat")) {
-            if (args.length == 0){ //Switch into StaffChat Mode
+            if (args.length == 0) { //Switch into StaffChat Mode
                 if (staffChatters.contains(sender.getName())) { //Leave staff chat
                     sender.sendMessage(ChatColor.GOLD + "You are no longer talking in staff chat.");
                     staffChatters.remove(sender.getName());
@@ -47,15 +64,15 @@ public class Transmission extends JavaPlugin {
                 }
             } else { //Send a single message to staff chat
                 StringBuilder message = new StringBuilder();
-                String playerName = (sender instanceof Player)? ((Player) sender).getDisplayName() : sender.getName();
-                for (int i=0; i<args.length; i++){
+                String playerName = (sender instanceof Player) ? ((Player) sender).getDisplayName() : sender.getName();
+                for (int i = 0; i < args.length; i++) {
                     message.append(args[i]);
-                    if (i != args.length - 1){
+                    if (i != args.length - 1) {
                         message.append(" ");
                     }
                 }
-                for(Player p : getServer().getOnlinePlayers()) {
-                    if(p.hasPermission("transmission.staffchat")) {
+                for (Player p : getServer().getOnlinePlayers()) {
+                    if (p.hasPermission("transmission.staffchat")) {
                         p.sendMessage(String.format(ChatColor.DARK_AQUA + "[S]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s", playerName, message));
                     }
                 }
@@ -125,55 +142,55 @@ public class Transmission extends JavaPlugin {
 
             }
             sender.sendMessage("There are " + getServer().getOnlinePlayers().length + "/" + getServer().getMaxPlayers() + " players online:");
-            sender.sendMessage(players.substring(0, players.length()-2));
+            sender.sendMessage(players.substring(0, players.length() - 2));
             sender.sendMessage(ChatColor.GREEN + "Please type /staff to see online staff members.");
 
-        } else if (command.getName().equalsIgnoreCase("mute")){
-            if (args.length == 0){
+        } else if (command.getName().equalsIgnoreCase("mute")) {
+            if (args.length == 0) {
                 String message = "Muted players: ";
-                for (String pname : config.MUTED_PLAYERS){
+                for (String pname : config.MUTED_PLAYERS) {
                     message += pname;
                     message += " ";
                 }
                 sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
                 sender.sendMessage(message);
-            } else if (args.length == 1){
-                if (config.MUTED_PLAYERS.contains(args[0].toLowerCase())){
+            } else if (args.length == 1) {
+                if (config.MUTED_PLAYERS.contains(args[0].toLowerCase())) {
                     sender.sendMessage(ChatColor.RED + "Player is already muted");
                 } else {
                     config.MUTED_PLAYERS.add(args[0].toLowerCase());
                     sender.sendMessage(ChatColor.RED + "Player has been muted");
-                    if (getServer().getPlayer(args[0]) instanceof Player){
+                    if (getServer().getPlayer(args[0]) instanceof Player) {
                         getServer().getPlayer(args[0]).sendMessage(ChatColor.RED + "You have been muted by " + sender.getName());
                     }
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "Usage: /mute <playername>");
             }
-        } else if (command.getName().equalsIgnoreCase("unmute")){
-            if (args.length != 1){
+        } else if (command.getName().equalsIgnoreCase("unmute")) {
+            if (args.length != 1) {
                 sender.sendMessage(ChatColor.RED + "Usage: /unmute <player>");
-            } else if (!config.MUTED_PLAYERS.contains(args[0].toLowerCase())){
+            } else if (!config.MUTED_PLAYERS.contains(args[0].toLowerCase())) {
                 sender.sendMessage(ChatColor.RED + "Player is not muted");
             } else {
                 config.MUTED_PLAYERS.remove(args[0].toLowerCase());
                 sender.sendMessage(ChatColor.RED + "Player was unmuted");
-                if (getServer().getPlayer(args[0]) instanceof Player){
+                if (getServer().getPlayer(args[0]) instanceof Player) {
                     getServer().getPlayer(args[0]).sendMessage(ChatColor.RED + "You have been unmuted by " + sender.getName());
                 }
             }
 
-        } else if (command.getName().equalsIgnoreCase("me")){
+        } else if (command.getName().equalsIgnoreCase("me")) {
             StringBuilder message = new StringBuilder();
-            for (String word: args){
+            for (String word : args) {
                 message.append(word).append(" ");
             }
-            if (!config.MUTED_PLAYERS.contains(sender.getName().toLowerCase())){
-                getServer().broadcastMessage(String.format("* %s %s",sender.getName(), message.toString()));
+            if (!config.MUTED_PLAYERS.contains(sender.getName().toLowerCase())) {
+                getServer().broadcastMessage(String.format("* %s %s", sender.getName(), message.toString()));
             } else {
                 sender.sendMessage(config.MUTE_MESSAGE);
             }
-        } else if (command.getName().equalsIgnoreCase("transmission-reload")){
+        } else if (command.getName().equalsIgnoreCase("transmission-reload")) {
             config.save();
             config.load();
             sender.sendMessage(ChatColor.RED + "Configuration reloaded");
@@ -182,8 +199,8 @@ public class Transmission extends JavaPlugin {
     }
 
     public void sendMessage(CommandSender from, CommandSender to, String message) {
-        if (config.MUTED_PLAYERS.contains(from.getName().toLowerCase())){
-            if (!to.hasPermission("Transmission.staff")){
+        if (config.MUTED_PLAYERS.contains(from.getName().toLowerCase())) {
+            if (!to.hasPermission("Transmission.staff")) {
                 from.sendMessage(config.MUTE_MESSAGE);
                 return;
             }

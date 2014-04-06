@@ -2,7 +2,35 @@ package at.junction.transmission;
 
 import org.bukkit.ChatColor;
 
+import java.util.ArrayList;
 import java.util.List;
+class CircularQueue<T> {
+    private ArrayList<T> objects;
+    private int pointer;
+
+    public T get(){
+        if (objects.size() == 0){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        T returnObject = objects.get(pointer);
+        pointer++;
+        if (pointer>objects.size()){
+            pointer=0;
+        }
+        return returnObject;
+    }
+
+    public void add(T insert){
+        if (objects.size() == 0){
+            pointer = 0;
+        }
+        objects.add(insert);
+    }
+
+    public int size(){
+        return objects.size();
+    }
+}
 
 public class Configuration {
     private Transmission plugin;
@@ -15,6 +43,10 @@ public class Configuration {
     boolean MOTD;
     ChatColor MOTD_COLOR;
     String MOTD_MESSAGE;
+    CircularQueue<String> ALERTS;
+    long ALERT_PERIOD;
+    long ALERT_DELAY;
+
 
     public Configuration(Transmission instance) {
         plugin = instance;
@@ -32,6 +64,12 @@ public class Configuration {
         MOTD_COLOR = ChatColor.valueOf(plugin.getConfig().getString("motd-color"));
         MOTD_MESSAGE = plugin.getConfig().getString("motd-message");
 
+        ALERT_PERIOD = plugin.getConfig().getLong("alert-period", 300);
+        ALERT_DELAY = plugin.getConfig().getLong("alert-delay", 60);
+        ALERTS = new CircularQueue<>();
+        for (String t : plugin.getConfig().getStringList("alerts")){
+            ALERTS.add(t);
+        }
 
     }
     public void save(){
