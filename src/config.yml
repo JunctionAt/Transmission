@@ -9,6 +9,8 @@ motd-color: GREEN
 motd-message: Welcome!
 alert-period: 300
 alert-delay: 30
+alert-color: LIGHT_PURPLE
+alert-prefix: SERVER
 alerts:
 - You didn't change the configuration
 - You should really change the configuration

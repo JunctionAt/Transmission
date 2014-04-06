@@ -1,6 +1,7 @@
 package at.junction.transmission;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,8 @@ public class Configuration {
     CircularQueue<String> ALERTS;
     long ALERT_PERIOD;
     long ALERT_DELAY;
-
+    ChatColor ALERT_COLOR;
+    String ALERT_PREFIX;
 
     public Configuration(Transmission instance) {
         plugin = instance;
@@ -66,6 +68,8 @@ public class Configuration {
 
         ALERT_PERIOD = plugin.getConfig().getLong("alert-period", 300);
         ALERT_DELAY = plugin.getConfig().getLong("alert-delay", 60);
+        ALERT_COLOR = ChatColor.valueOf(plugin.getConfig().getString("alert-color", "LIGHT_PURPLE"));
+        ALERT_PREFIX = plugin.getConfig().getString("alert-prefix", "SERVER");
         ALERTS = new CircularQueue<>();
         for (String t : plugin.getConfig().getStringList("alerts")){
             ALERTS.add(t);
