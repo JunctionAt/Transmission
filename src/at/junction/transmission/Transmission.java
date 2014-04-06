@@ -38,7 +38,7 @@ public class Transmission extends JavaPlugin {
             @Override
             public void run() {
                 if (config.ALERTS.size() > 0){
-                    getServer().broadcastMessage(String.format("%s[%s] %s", config.ALERT_PREFIX,config.ALERT_COLOR ,config.ALERTS.get()));
+                    getServer().broadcastMessage(String.format("%s[%s] %s", config.ALERT_COLOR, config.ALERT_PREFIX, config.ALERTS.get()));
                 }
             }
         }, config.ALERT_DELAY * 20, config.ALERT_PERIOD * 20);

@@ -14,7 +14,7 @@ class CircularQueue<T> {
         }
         T returnObject = objects.get(pointer);
         pointer++;
-        if (pointer >= objects.size()-1)
+        if (pointer == objects.size())
             pointer=0;
 
         return returnObject;
