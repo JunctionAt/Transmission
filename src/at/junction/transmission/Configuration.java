@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import java.util.ArrayList;
 import java.util.List;
 class CircularQueue<T> {
-    private ArrayList<T> objects;
+    private ArrayList<T> objects = new ArrayList<>();
     private int pointer;
 
     public T get(){
