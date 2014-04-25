@@ -71,11 +71,13 @@ public class Transmission extends JavaPlugin {
                         message.append(" ");
                     }
                 }
+                String format = String.format(ChatColor.DARK_AQUA + "[S]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s", playerName, message);
                 for (Player p : getServer().getOnlinePlayers()) {
                     if (p.hasPermission("transmission.staffchat")) {
-                        p.sendMessage(String.format(ChatColor.DARK_AQUA + "[S]<" + ChatColor.WHITE + "%1$s" + ChatColor.DARK_AQUA + "> " + ChatColor.RESET + "%2$s", playerName, message));
+                        p.sendMessage(format);
                     }
                 }
+                getServer().getConsoleSender().sendMessage(format);
             }
         } else if (command.getName().equalsIgnoreCase("broadcast")) {
             if (args.length < 1) {
