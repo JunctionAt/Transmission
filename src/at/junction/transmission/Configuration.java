@@ -48,6 +48,7 @@ public class Configuration {
     long ALERT_DELAY;
     ChatColor ALERT_COLOR;
     String ALERT_PREFIX;
+    boolean PLAYER_RADAR;
 
     public Configuration(Transmission instance) {
         plugin = instance;
@@ -74,6 +75,7 @@ public class Configuration {
             ALERTS.add(t);
         }
 
+        PLAYER_RADAR = plugin.getConfig().getBoolean("player-radar", true);
     }
     public void save(){
         plugin.getConfig().set("muted-players", MUTED_PLAYERS);

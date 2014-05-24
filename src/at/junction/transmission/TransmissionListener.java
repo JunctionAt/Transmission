@@ -86,6 +86,9 @@ public class TransmissionListener implements Listener {
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event){
+        if (plugin.config.PLAYER_RADAR){
+            event.getPlayer().sendMessage(String.format("%s%s%s%s%s", ChatColor.BLACK, ChatColor.BLACK, ChatColor.DARK_GREEN, ChatColor.YELLOW, ChatColor.WHITE));
+        }
         if (plugin.config.MOTD){
             event.getPlayer().sendMessage(plugin.config.MOTD_COLOR + plugin.config.MOTD_MESSAGE);
         }

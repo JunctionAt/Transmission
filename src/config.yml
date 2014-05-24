@@ -14,3 +14,4 @@ alert-prefix: SERVER
 alerts:
 - You didn't change the configuration
 - You should really change the configuration
+player-radar: true
