@@ -212,7 +212,7 @@ public class Transmission extends JavaPlugin {
                 + ChatColor.GRAY + " -> "
                 + ChatColor.GOLD + "%s"
                 + ChatColor.GRAY + "] "
-                + ChatColor.WHITE + message;
+                + ChatColor.WHITE + message.replace("%", "%%");
         from.sendMessage(String.format(niceMessage, "Me", to.getName()));
         to.sendMessage(String.format(niceMessage, from.getName(), "Me"));
     }
